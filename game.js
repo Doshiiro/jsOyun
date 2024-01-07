@@ -373,3 +373,8 @@ var player, angle, bullets, enemies, maxenemy, score, kills;
 
 
 
+var audio = document.getElementById("myAudio");
+
+function playAudio() {
+    audio.play();
+}
