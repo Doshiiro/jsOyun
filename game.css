@@ -66,21 +66,23 @@ div#kills {
 .panel button {
     outline: none;
     border: none;
-    background: green;
-    color: white;
+    background-color: #FFFFFF;
+
+    color: black;
     padding: .5rem 1.5rem;
     font-size: 1.4rem;
     border-radius: .5rem;
+    margin: 1rem;
 }
 
 
 
 /*progress bar*/
 .progress {
-   
+
     position: absolute;
     left: 35%;
-  
+
     --progress: 0%;
     width: 500px;
     height: 30px;
@@ -128,4 +130,81 @@ div#kills {
     50% {
         box-shadow: 0 0 15px 5px orange;
     }
+}
+
+
+
+
+
+
+
+.button-73 {
+    appearance: none;
+    background-color: #FFFFFF;
+    border-radius: 40em;
+    border-style: none;
+    box-shadow: #ADCFFF 0 -12px 6px inset;
+    box-sizing: border-box;
+    color: #000000;
+    cursor: pointer;
+    display: inline-block;
+    font-family: -apple-system, sans-serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    letter-spacing: -.24px;
+    margin: 0;
+    outline: none;
+    padding: 1rem 1.3rem;
+    quotes: auto;
+    text-align: center;
+    text-decoration: none;
+    transition: all .15s;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+}
+
+.button-73:hover {
+    background-color: #FFC229;
+    box-shadow: #FF6314 0 -6px 8px inset;
+    transform: scale(1.125);
+}
+
+.button-73:active {
+    transform: scale(1.025);
+}
+
+@media (min-width: 768px) {
+    .button-73 {
+        font-size: 1.5rem;
+        padding: .75rem 2rem;
+    }
+}
+
+
+.desp {
+    display: none;
+}
+.despShow{
+    text-align: center;
+    background: white;
+    position: absolute;
+    padding: 2rem;
+    border-radius: 0.5rem;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    display: block !important;
+}
+.despShow h2{
+    margin: 1rem;
+    color: green;
+}
+
+.power{
+    color: red;
 }

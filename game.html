@@ -13,15 +13,22 @@
     <div id="kills"></div>
     <div id="start" class="panel">
         <h2>Savunma Oyunu</h2>
-        <p>Düşmanlara karşı kendini koru !</p>
-        <button onclick="init();">Başla</button>
-    </div>
+        <p>Üzerine gelen düşmanları yok et !</p>
+        <button class="button-73" onclick="init();">Başla</button>
+        <div class="button-73" role="button" onclick="descriptionFunc()">Nasıl Oynanır</div>
 
+    </div>
+    <div class="desp">
+        <h2>Nasıl Oynanır</h2>
+        <p>Mouse 1 tuşuna basarak ateş edilir.</p> <br>
+        <p>6 düşman öldürdükten sonra ikinci silah açılır.</p> <br>
+        <p class="power">Yukarıda bulunan bar fullendikten sonra Space tuşuna basarak özel güç kullanılabilir</p><br>
+        <button class="button-73" onclick="init();">Başla</button>
+    </div>
 
     <div class="progress">
         <div class="bar"></div>
-      </div>
-
+    </div>
 
     <canvas id="canvas"></canvas>
 

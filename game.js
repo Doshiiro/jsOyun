@@ -6,6 +6,9 @@ const p = document.querySelector("#start p");
 
 const bar = document.querySelector(".bar");
 
+
+const despShow = document.querySelector(".desp")
+
 const canvas = document.getElementById("canvas");
 const width = window.innerWidth;
 const height = window.innerHeight;
@@ -176,7 +179,7 @@ function addEnemy() {
     for (var i = enemies.length; i < maxenemy; i++) {
         var r = Math.random() * 30 + 10;
         var c = 'hsl(' + (Math.random() * 360) + ',40%,50%)';
-        var s = .5 + ((40 - ((r / 40) * r)) / 360) * maxenemy;
+        var s = .5 + ((40 - ((r / 40) * r)) / 240) * maxenemy;//düşman arttırkça düşmanların hızı artıyor.
 
         //random kordinatlardan düşman gelmesi.
         var x, y;
@@ -279,7 +282,7 @@ function animate() {
                                 const intervalId = setInterval(() => {
                                     time--
                                     console.log(time)
-                                   
+
                                     if (time == 0) {
                                         clearInterval(intervalId);
                                         progress = 0;
@@ -350,12 +353,18 @@ function init() {
     enemies = [];
     maxenemy = 1;
     startdiv.classList.add("hidden")
+    despShow.classList.remove("despShow")
     if (btn.textContent == "Tekrar Dene") {
         location.reload();
     }
     player = new Player(width / 2, height / 2, 20, 'white');
     addEnemy();
     animate();
+}
+
+function descriptionFunc() {
+    despShow.classList.add("despShow")
+    startdiv.classList.add("hidden")
 }
 
 var playing = false;
