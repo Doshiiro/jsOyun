@@ -1,21 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Oyun</title>
     <link rel="stylesheet" href="game.css">
 </head>
+
 <body>
     <div id="score"></div>
     <div id="kills"></div>
-<div id="start" class="panel">
-    <h2>Savunma Oyunu</h2>
-    <p>Düşmanlara karşı kendini koru !</p>
-    <button onclick="init();">Başla</button>
-</div>
+    <div id="start" class="panel">
+        <h2>Savunma Oyunu</h2>
+        <p>Düşmanlara karşı kendini koru !</p>
+        <button onclick="init();">Başla</button>
+    </div>
+
+
+    <div class="progress">
+        <div class="bar"></div>
+      </div>
+
+
     <canvas id="canvas"></canvas>
 
     <script src="game.js"></script>
 </body>
+
 </html>

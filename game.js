@@ -1,8 +1,10 @@
 const scorediv = document.getElementById("score");
 const killsdiv = document.getElementById("kills");
 const startdiv = document.getElementById("start");
-const btn=document.querySelector("#start button");
-const p=document.querySelector("#start p");
+const btn = document.querySelector("#start button");
+const p = document.querySelector("#start p");
+
+const bar = document.querySelector(".bar");
 
 const canvas = document.getElementById("canvas");
 const width = window.innerWidth;
@@ -66,6 +68,17 @@ function handleKeyUp(e) {
 
 
 
+canvas.addEventListener("click", (e) => {
+    if (kills > 5) {
+        var targetX = player.x - (e.pageX - player.x);
+        var targetY = player.y - (e.pageY - player.y);
+
+    }
+
+    // Bu hedefe doğru mermi ateşle
+    bullets.push(new Circle(player.x, player.y, targetX, targetY, 5, "white", 5));
+});
+
 
 //mouse eventi ile karakter hareketi
 canvas.addEventListener("mousemove", (e) => {
@@ -77,6 +90,10 @@ canvas.addEventListener("mousemove", (e) => {
         angle = tetha;
     }
 });
+
+
+
+
 
 canvas.addEventListener("click", (e) => {
     bullets.push(new Circle(player.x, player.y, e.pageX, e.pageY, 5, "white", 5));
@@ -128,7 +145,6 @@ class Circle {
 
 }
 
-
 class Player {
     constructor(x, y, r, c) {
         this.x = x;
@@ -144,6 +160,11 @@ class Player {
         ctx.beginPath();
         ctx.arc(0, 0, this.r, 0, Math.PI * 2);
         ctx.fillRect(0, -(this.r * .4), this.r + 15, this.r * .8);
+        //tersine silah yapımı
+        if (kills > 5) {
+            ctx.fillRect(-(this.r + 15), -(this.r * .4), this.r + 15, this.r * .8);
+        }
+
         ctx.fill();
         ctx.closePath();
         ctx.restore();
@@ -155,7 +176,7 @@ function addEnemy() {
     for (var i = enemies.length; i < maxenemy; i++) {
         var r = Math.random() * 30 + 10;
         var c = 'hsl(' + (Math.random() * 360) + ',40%,50%)';
-        var s = .5 + ((40 - ((r / 40) * r)) / 160) * maxenemy;
+        var s = .5 + ((40 - ((r / 40) * r)) / 360) * maxenemy;
 
         //random kordinatlardan düşman gelmesi.
         var x, y;
@@ -183,6 +204,20 @@ function collision(x1, y1, r1, x2, y2, r2) {
 }
 
 
+
+//x tuşu ile her yere ateş edebiliyor
+function fireInAllDirections() {
+    for (let angle = 0; angle < 360; angle += 45) { // Her 45 derecede bir mermi oluştur
+        let radian = angle * Math.PI / 180;
+        let dx = Math.cos(radian);
+        let dy = Math.sin(radian);
+
+        // Oyuncunun konumundan başlayarak belirtilen yönlerde mermi yarat
+        bullets.push(new Circle(player.x, player.y, player.x + dx, player.y + dy, 5, "white", 5));
+    }
+}
+
+
 function animate() {
     if (playing) {
         requestAnimationFrame(animate);
@@ -196,16 +231,72 @@ function animate() {
             bullets.forEach((bullet, b) => {
 
                 if (collision(enemy.x, enemy.y, enemy.r, bullet.x, bullet.y, bullet.r)) {
-                
+
+
                     if (enemy.r < 15) {
                         enemies.splice(e, 1);
                         addEnemy();
                         score += 25;
                         kills++;
-                        if (kills % 3 === 0) {
-                            maxenemy++;
+
+                        if (kills % 2 === 0) {
+                            if (maxenemy <= 15) {
+                                maxenemy++;
+                            }
+                        }
+
+                        if (kills % 10 === 0) {
+                            progress += 50
+                            temp++;
+                            if (progress <= 100 && time == 5) {
+
+                                setTimeout(() => {
+                                    bar.style.setProperty("--progress", progress + "%");
+                                }, 1);
+                            }
+
+                            if (temp % 2 == 0) {
+
+
+                                if (progress == 100) {
+                                    fireInAllDirections = function () {
+                                        for (let angle = 0; angle < 360; angle += 25) { // Her 45 derecede bir mermi oluştur
+                                            let radian = angle * Math.PI / 180;
+                                            let dx = Math.cos(radian);
+                                            let dy = Math.sin(radian);
+
+                                            // Oyuncunun konumundan başlayarak belirtilen yönlerde mermi yarat
+                                            bullets.push(new Circle(player.x, player.y, player.x + dx, player.y + dy, 5, "white", 5));
+                                        }
+                                    }
+                                    document.addEventListener("keydown", (e) => {
+                                        if (e.key === " ") { // Örneğin, boşluk tuşuna basıldığında ateş et
+                                            fireInAllDirections();
+                                        }
+                                    });
+                                }
+
+                                const intervalId = setInterval(() => {
+                                    time--
+                                    console.log(time)
+                                   
+                                    if (time == 0) {
+                                        clearInterval(intervalId);
+                                        progress = 0;
+                                        time = 5
+                                        console.log("func null ")
+                                        fireInAllDirections = function () {
+                                            console.log("fonk değişti")
+                                        }
+
+                                        bar.style.setProperty("--progress", progress + "%");
+                                        console.log("süre 0");
+                                    }
+                                }, 1000);
+                            }
                         }
                     }
+
                     else {
                         enemy.r -= 5;
                         score += 5;
@@ -215,11 +306,11 @@ function animate() {
 
             });
 
-
             if (collision(enemy.x, enemy.y, enemy.r, player.x, player.y, player.r)) {
                 startdiv.classList.remove("hidden");
-                btn.textContent="Tekrar Dene";
-                p.innerHTML="Oyun bitti ! <br/> Puanın : "+score;
+                btn.textContent = "Tekrar Dene";
+
+                p.innerHTML = "Oyun bitti ! <br/> Puanın : " + score;
                 playing = false;
             }
 
@@ -252,11 +343,16 @@ function init() {
     angle = 0;
     score = 0;
     kills = 0;
+    progress = 0;
+    time = 5;
+    temp = 0;
     bullets = [];
     enemies = [];
     maxenemy = 1;
     startdiv.classList.add("hidden")
-
+    if (btn.textContent == "Tekrar Dene") {
+        location.reload();
+    }
     player = new Player(width / 2, height / 2, 20, 'white');
     addEnemy();
     animate();
@@ -265,3 +361,6 @@ function init() {
 var playing = false;
 var player, angle, bullets, enemies, maxenemy, score, kills;
 //init();
+
+
+
