@@ -243,7 +243,7 @@ function animate() {
                         kills++;
 
                         if (kills % 2 === 0) {
-                            if (maxenemy <= 15) {
+                            if (maxenemy <= 25) {
                                 maxenemy++;
                             }
                         }

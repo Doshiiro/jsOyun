@@ -41,10 +41,10 @@ div#kills {
 }
 
 .panel {
-    background: white;
+    background: black;
     position: absolute;
     padding: 2rem;
-    border-radius: .5rem;
+    border-radius: 0.5rem;
     transform: translate(-50%, -50%);
     top: 50%;
     left: 50%;
@@ -52,6 +52,7 @@ div#kills {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+ 
 }
 
 .panel h2 {
@@ -59,7 +60,7 @@ div#kills {
 }
 
 .panel p {
-    color: #444;
+    color: white;
     margin: 2rem;
 }
 
